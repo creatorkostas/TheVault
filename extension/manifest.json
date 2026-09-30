@@ -1,0 +1,39 @@
+{
+  "manifest_version": 2,
+  "name": "TheVault Clipper",
+  "version": "0.1.0",
+  "description": "Save pages, YouTube videos, images, links and notes to your personal TheVault.",
+  "applications": {
+    "gecko": {
+      "id": "thevault-clipper@localhost",
+      "strict_min_version": "109.0"
+    }
+  },
+  "permissions": [
+    "tabs",
+    "contextMenus",
+    "storage",
+    "notifications",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_title": "Save to TheVault",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icons/vault.svg",
+      "96": "icons/vault.svg"
+    }
+  },
+  "icons": {
+    "48": "icons/vault.svg",
+    "96": "icons/vault.svg"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  }
+}

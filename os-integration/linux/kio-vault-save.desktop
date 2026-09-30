@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=image/*;video/*;audio/*;
+Actions=saveToVault;
+
+[Desktop Action saveToVault]
+Name=Save to TheVault
+Icon=document-save
+Exec=vault-save-many %F

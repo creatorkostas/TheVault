@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "thevault": {
+      "command": "bun",
+      "args": ["C:/Users/RXPC/Documents/projects/TheVault/mcp/src/server.ts"],
+      "cwd": "C:/Users/RXPC/Documents/projects/TheVault",
+      "env": {
+        "VAULT_USER_ID": "user_... (copy from Settings in the vault)"
+      }
+    }
+  }
+}

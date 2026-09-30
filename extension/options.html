@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    body { font: 14px system-ui; padding: 12px; background: #141417; color: #ececf1; }
+    input { width: 320px; padding: 7px; border-radius: 8px; border: 1px solid #333; background: #1f1f23; color: #ececf1; }
+    button { padding: 7px 14px; border: 0; border-radius: 8px; font-weight: 700; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h3>TheVault Clipper settings</h3>
+  <label>Vault base URL:
+    <input id="vaultUrl" placeholder="http://localhost:3000" />
+  </label>
+  <br /><br />
+  <label>API token (Settings in the vault → New token):
+    <input id="apiToken" placeholder="vt_…" />
+  </label>
+  <br /><br />
+  <button id="save">Save</button>
+  <span id="status"></span>
+  <script src="options.js"></script>
+</body>
+</html>

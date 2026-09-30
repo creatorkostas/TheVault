@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <style>
+    body { width: 320px; font: 14px system-ui; margin: 0; padding: 12px; background: #141417; color: #ececf1; }
+    h2 { margin: 0 0 8px; font-size: 15px; }
+    input, select, textarea { width: 100%; box-sizing: border-box; margin: 4px 0 8px; padding: 7px; border-radius: 8px; border: 1px solid #333; background: #1f1f23; color: #ececf1; }
+    button { width: 100%; padding: 9px; border: 0; border-radius: 10px; font-weight: 700; cursor: pointer; }
+    #save { background: #fff; color: #000; }
+    #status { min-height: 18px; font-size: 12px; color: #a1a1aa; margin-top: 6px; }
+    .row { display: flex; gap: 6px; }
+  </style>
+</head>
+<body>
+  <h2>Save to TheVault</h2>
+  <select id="type">
+    <option value="auto">auto-detect</option>
+    <option value="website">website</option>
+    <option value="bookmark">bookmark</option>
+    <option value="youtube">youtube</option>
+    <option value="note">note</option>
+    <option value="image">image</option>
+  </select>
+  <input id="title" placeholder="Title" />
+  <input id="url" placeholder="URL" />
+  <textarea id="content" rows="3" placeholder="Note (optional)"></textarea>
+  <div class="row">
+    <input id="tags" placeholder="tags, comma" />
+    <input id="collection" placeholder="collection" />
+  </div>
+  <button id="save">Save</button>
+  <div id="status"></div>
+  <script src="popup.js"></script>
+</body>
+</html>

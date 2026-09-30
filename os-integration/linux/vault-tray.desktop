@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=TheVault
+Comment=Personal vault — runs in the system tray
+Exec=vault-tray
+Icon=vault-tray
+Terminal=false
+Categories=Utility;Office;
+StartupNotify=false
