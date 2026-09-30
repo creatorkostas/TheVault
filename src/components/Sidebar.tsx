@@ -64,7 +64,7 @@ export function Sidebar({
   return (
     <nav className="sticky top-0 flex h-screen w-16 flex-col items-center gap-1 border-r border-zinc-200 bg-white py-3">
       <span className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[#e60023] text-xl font-black text-white">
-        V
+        E
       </span>
       {visibleFilters(disabled).map(({ key, label, Icon }) => (
         <button

@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * vault.exe — double-click launcher for TheVault.
+ * vault.exe — double-click launcher for Enthymio.
  * Starts the Next.js server from the app root, opens the browser.
  * Flags: --port 3000 --no-browser --root <dir> --disable-types video,audio
  */
@@ -13,8 +13,8 @@ const flag = (name: string, fallback: string): string => {
 };
 const PORT = flag("--port", process.env.PORT ?? "3000");
 const NO_BROWSER = args.includes("--no-browser");
-const DISABLED = flag("--disable-types", process.env.VAULT_DISABLED_TYPES ?? "");
-if (DISABLED) process.env.VAULT_DISABLED_TYPES = DISABLED;
+const DISABLED = flag("--disable-types", process.env.ENTHYMIO_DISABLED_TYPES ?? "");
+if (DISABLED) process.env.ENTHYMIO_DISABLED_TYPES = DISABLED;
 
 const ROOT =
   flag("--root", "") ||
@@ -29,7 +29,7 @@ const cmd = useStandalone
   ? ["bun", join(ROOT, ".next", "standalone", "server.js")]
   : ["bun", "run", "start", "--", "-p", PORT];
 
-console.log(`Starting TheVault on http://localhost:${PORT} …`);
+console.log(`Starting Enthymio on http://localhost:${PORT} …`);
 const proc = Bun.spawn(cmd, {
   cwd: ROOT,
   env: { ...process.env, PORT, HOSTNAME: "127.0.0.1" },
@@ -51,7 +51,7 @@ const waitReady = async (): Promise<boolean> => {
 };
 
 if (await waitReady()) {
-  console.log(`TheVault is live: http://localhost:${PORT}`);
+  console.log(`Enthymio is live: http://localhost:${PORT}`);
   if (!NO_BROWSER) {
     const opener =
       process.platform === "win32" ? "cmd" : process.platform === "darwin" ? "open" : "xdg-open";

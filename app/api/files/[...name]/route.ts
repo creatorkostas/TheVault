@@ -31,7 +31,7 @@ export async function GET(
     return new NextResponse("not found", { status: 404 });
   const owned = getItemByMedia(authed.userId, `/api/files/${filename}`);
   if (!owned) return new NextResponse("not found", { status: 404 });
-  const buf = await readFile(`./data/vault/${filename}`).catch(() => null);
+  const buf = await readFile(`./data/enthymio/${filename}`).catch(() => null);
   if (!buf) return new NextResponse("not found", { status: 404 });
   const ext = filename.split(".").pop()?.toLowerCase() ?? "";
   return new NextResponse(new Uint8Array(buf), {

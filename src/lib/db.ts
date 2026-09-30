@@ -1,13 +1,13 @@
 import { mkdirSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
 
-const DB_PATH = "./data/vault.db";
+const DB_PATH = "./data/enthymio.db";
 
 let db: DatabaseSync | null = null;
 
 export const getDb = (): DatabaseSync => {
   if (db) return db;
-  mkdirSync("./data/vault", { recursive: true });
+  mkdirSync("./data/enthymio", { recursive: true });
   db = new DatabaseSync(DB_PATH);
   db.exec("PRAGMA journal_mode = WAL;");
   db.exec(TABLES_SQL);

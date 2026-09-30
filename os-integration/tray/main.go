@@ -1,6 +1,6 @@
-// Package main: TheVault system-tray app (Windows + Linux GUI).
+// Package main: Enthymio system-tray app (Windows + Linux GUI).
 //
-// Double-click vault-tray(.exe): starts the Next.js server, shows a tray icon
+// Double-click enthymio-tray(.exe): starts the Next.js server, shows a tray icon
 // with Open / Restart / Quit. No console window needed on Windows.
 //
 // Flags: --port 3000 --root <app dir> --no-tray (console mode for testing)
@@ -43,7 +43,7 @@ func main() {
 		if err := app.start(); err != nil {
 			fatal(err)
 		}
-		fmt.Printf("TheVault live at http://localhost:%s (Ctrl+C to stop)\n", *port)
+		fmt.Printf("Enthymio live at http://localhost:%s (Ctrl+C to stop)\n", *port)
 		select {} // run until killed
 	}
 	// Start the server BEFORE the tray loop so the vault works even where
@@ -56,16 +56,16 @@ func main() {
 
 func onReady() {
 	systray.SetIcon(trayIcon())
-	systray.SetTitle("TheVault")
-	systray.SetTooltip("TheVault is starting…")
+	systray.SetTitle("Enthymio")
+	systray.SetTooltip("Enthymio is starting…")
 
-	mOpen := systray.AddMenuItem("Open TheVault", "Open in browser")
+	mOpen := systray.AddMenuItem("Open Enthymio", "Open in browser")
 	mRestart := systray.AddMenuItem("Restart server", "Restart the vault server")
 	systray.AddSeparator()
 	mQuit := systray.AddMenuItem("Quit", "Stop the server and quit")
 
 	go func() {
-		systray.SetTooltip("TheVault — http://localhost:" + app.port)
+		systray.SetTooltip("Enthymio — http://localhost:" + app.port)
 		openBrowser("http://localhost:" + app.port)
 	}()
 
@@ -75,12 +75,12 @@ func onReady() {
 			openBrowser("http://localhost:" + app.port)
 		case <-mRestart.ClickedCh:
 			go func() {
-				systray.SetTooltip("TheVault is restarting…")
+				systray.SetTooltip("Enthymio is restarting…")
 				if err := app.restart(); err != nil {
-					systray.SetTooltip("TheVault failed to start")
+					systray.SetTooltip("Enthymio failed to start")
 					return
 				}
-				systray.SetTooltip("TheVault — http://localhost:" + app.port)
+				systray.SetTooltip("Enthymio — http://localhost:" + app.port)
 			}()
 		case <-mQuit.ClickedCh:
 			systray.Quit()
@@ -142,6 +142,6 @@ func envOr(key, fallback string) string {
 }
 
 func fatal(err error) {
-	fmt.Fprintln(os.Stderr, "vault-tray:", err)
+	fmt.Fprintln(os.Stderr, "enthymio-tray:", err)
 	os.Exit(1)
 }

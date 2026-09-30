@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
-Name=TheVault
+Name=Enthymio
 Comment=Personal vault — runs in the system tray
-Exec=vault-tray
-Icon=vault-tray
+Exec=enthymio-tray
+Icon=enthymio-tray
 Terminal=false
 Categories=Utility;Office;
 StartupNotify=false

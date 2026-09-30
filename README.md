@@ -1,4 +1,4 @@
-# TheVault
+# Enthymio
 
 Personal vault for **images, bookmarks/websites, notes, audio notes, videos, YouTube links** — Pinterest-style masonry UI (Karakeep-like save-anything spirit).
 
@@ -8,7 +8,7 @@ Built with **Next.js 16.3.7 + Bun + SQLite** (`node:sqlite`, no native deps). Si
 
 ```powershell
 bun install
-bun run db:init     # creates ./data/vault.db
+bun run db:init     # creates ./data/enthymio.db
 bun run db:seed     # 2 sample items (first run)
 bun run dev         # http://localhost:3000
 ```
@@ -38,8 +38,8 @@ session, so they authenticate with a token instead:
 
 1. Sign in → sidebar gear → **Settings** → **New token** (copy it once)
 2. Extension: paste into the add-on Preferences → API token field
-3. Go helper: `--token vt_…` or `VAULT_TOKEN` env
-4. MCP server: set `VAULT_USER_ID` to the user id shown in Settings
+3. Go helper: `--token et_…` or `ENTHYMIO_TOKEN` env
+4. MCP server: set `ENTHYMIO_USER_ID` to the user id shown in Settings
    (see `mcp/config.example.json`)
 
 Revoke any time from Settings. API calls without a session or valid token
@@ -50,7 +50,7 @@ MCP saves (400), and hidden in the web UI sidebar, save drawer, and
 extension popup:
 
 ```powershell
-$env:VAULT_DISABLED_TYPES = "video,audio"   # comma-separated: image,bookmark,website,note,audio,video,youtube
+$env:ENTHYMIO_DISABLED_TYPES = "video,audio"   # comma-separated: image,bookmark,website,note,audio,video,youtube
 bun run dev
 ```
 
@@ -58,8 +58,8 @@ Flags (set the same env for the server child):
 
 ```powershell
 .\dist\vault.exe --disable-types video,audio
-.\dist\vault-tray.exe --disable-types video,audio
-docker run -e VAULT_DISABLED_TYPES=video,audio -v vault-data:/app/data -p 3000:3000 vault
+.\dist\enthymio-tray.exe --disable-types video,audio
+docker run -e ENTHYMIO_DISABLED_TYPES=video,audio -v vault-data:/app/data -p 3000:3000 vault
 ```
 
 `GET /api/config` exposes the active list for clients.
@@ -70,7 +70,7 @@ docker run -e VAULT_DISABLED_TYPES=video,audio -v vault-data:/app/data -p 3000:3
 
 - Masonry grid, search (title/note/tags/url), filter by type
 - Add drawer: bookmark / website / note / image / video / audio / youtube
-- File upload (`POST /api/upload`, max 200MB) → stored in `./data/vault/`, served via `/api/files/*`
+- File upload (`POST /api/upload`, max 200MB) → stored in `./data/enthymio/`, served via `/api/files/*`
 - Audio notes: in-browser recorder (MediaRecorder) or file upload
 - YouTube: paste URL → embed + auto thumbnail (no download, link only)
 - Uploaded videos: full file stored + `<video>` player
@@ -78,7 +78,7 @@ docker run -e VAULT_DISABLED_TYPES=video,audio -v vault-data:/app/data -p 3000:3
 
 ## Data
 
-- SQLite at `./data/vault.db` (WAL), media in `./data/vault/`
+- SQLite at `./data/enthymio.db` (WAL), media in `./data/enthymio/`
 - No auth — bind to localhost or add auth before exposing
 
 ## Browser extension (Firefox / Zen)
@@ -89,8 +89,8 @@ Manifest V2 clipper in `extension/` — toolbar popup (YouTube auto-detect) + ri
 
 ## OS integration + one-click run
 
-- **Go clipper** (`os-integration/`, stdlib-only): `dist/vault-save.exe` — save URLs, files, notes, `.url` shortcuts. Windows right-click menus (`windows/install-context-menu.ps1`, per-user, no admin) + Linux Nautilus/Nemo/Dolphin/clipboard integration (`linux/install.sh`). See `os-integration/README.md`.
-- **One-click run**: `dist/vault.exe` (Bun-compiled launcher, double-click, opens browser) or `packaging/build.ps1` for a full `dist/vault/` bundle. **Tray (GUI)**: `dist/vault-tray.exe` — system-tray icon with Open/Restart/Quit (Windows + Linux, see `os-integration/README.md`). **Host anywhere**: `Dockerfile` (`docker build -t vault .`, data persisted via `/app/data` volume).
+- **Go clipper** (`os-integration/`, stdlib-only): `dist/enthymio-save.exe` — save URLs, files, notes, `.url` shortcuts. Windows right-click menus (`windows/install-context-menu.ps1`, per-user, no admin) + Linux Nautilus/Nemo/Dolphin/clipboard integration (`linux/install.sh`). See `os-integration/README.md`.
+- **One-click run**: `dist/vault.exe` (Bun-compiled launcher, double-click, opens browser) or `packaging/build.ps1` for a full `dist/vault/` bundle. **Tray (GUI)**: `dist/enthymio-tray.exe` — system-tray icon with Open/Restart/Quit (Windows + Linux, see `os-integration/README.md`). **Host anywhere**: `Dockerfile` (`docker build -t vault .`, data persisted via `/app/data` volume).
 
 ## MCP server (for agents)
 

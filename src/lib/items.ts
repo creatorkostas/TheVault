@@ -176,7 +176,7 @@ export function ensureWelcome(userId: string): void {
   if (count.n > 0) return;
   createItem(userId, {
     type: "note",
-    title: "Welcome to TheVault",
+    title: "Welcome to Enthymio",
     content: "Save images, bookmarks, notes, audio notes, videos and YouTube links here.",
     tags: ["welcome"],
   });

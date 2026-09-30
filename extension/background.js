@@ -1,10 +1,10 @@
-/* TheVault Clipper — background (Firefox/Zen, MV2). Uses `browser` namespace. */
+/* Enthymio Clipper — background (Firefox/Zen, MV2). Uses `browser` namespace. */
 
-const DEFAULT_VAULT_URL = "http://localhost:3000";
+const DEFAULT_ENTHYMIO_URL = "http://localhost:3000";
 
-const getVaultUrl = async () => {
-  const { vaultUrl } = await browser.storage.sync.get("vaultUrl");
-  return (vaultUrl || DEFAULT_VAULT_URL).replace(/\/$/, "");
+const getEnthymioUrl = async () => {
+  const { enthymioUrl } = await browser.storage.sync.get("enthymioUrl");
+  return (enthymioUrl || DEFAULT_ENTHYMIO_URL).replace(/\/$/, "");
 };
 
 const authHeaders = async () => {
@@ -15,7 +15,7 @@ const authHeaders = async () => {
 };
 
 const postItem = async (input) => {
-  const base = await getVaultUrl();
+  const base = await getEnthymioUrl();
   const res = await fetch(`${base}/api/items`, {
     method: "POST",
     headers: await authHeaders(),
@@ -28,7 +28,7 @@ const postItem = async (input) => {
 
 const notify = (title, message) =>
   browser.notifications
-    .create({ type: "basic", iconUrl: "icons/vault.svg", title, message })
+    .create({ type: "basic", iconUrl: "icons/icon.svg", title, message })
     .catch(() => {});
 
 const isYouTube = (url) => /^(https?:\/\/)?(www\.|m\.)?(youtube\.com|youtu\.be)\//.test(url || "");
@@ -46,22 +46,22 @@ const saveCurrentTab = async () => {
 
 browser.runtime.onInstalled.addListener(() => {
   browser.contextMenus.create({
-    id: "vault-save-page",
-    title: "Save page to TheVault",
+    id: "enthymio-save-page",
+    title: "Save page to Enthymio",
     contexts: ["page"],
   });
   browser.contextMenus.create({
-    id: "vault-save-link",
-    title: "Save link to TheVault",
+    id: "enthymio-save-link",
+    title: "Save link to Enthymio",
     contexts: ["link"],
   });
   browser.contextMenus.create({
-    id: "vault-save-image",
-    title: "Save image link to TheVault",
+    id: "enthymio-save-image",
+    title: "Save image link to Enthymio",
     contexts: ["image"],
   });
   browser.contextMenus.create({
-    id: "vault-save-selection",
+    id: "enthymio-save-selection",
     title: "Save selection as note",
     contexts: ["selection"],
   });
@@ -69,21 +69,21 @@ browser.runtime.onInstalled.addListener(() => {
 
 browser.contextMenus.onClicked.addListener(async (info, tab) => {
   try {
-    if (info.menuItemId === "vault-save-page") {
+    if (info.menuItemId === "enthymio-save-page") {
       await postItem({
         type: isYouTube(tab.url) ? "youtube" : "website",
         title: tab.title || tab.url,
         url: tab.url,
         tags: ["clipped"],
       });
-    } else if (info.menuItemId === "vault-save-link") {
+    } else if (info.menuItemId === "enthymio-save-link") {
       await postItem({
         type: isYouTube(info.linkUrl) ? "youtube" : "bookmark",
         title: info.linkText?.trim() || info.linkUrl,
         url: info.linkUrl,
         tags: ["clipped"],
       });
-    } else if (info.menuItemId === "vault-save-image") {
+    } else if (info.menuItemId === "enthymio-save-image") {
       await postItem({
         type: "image",
         title: info.srcUrl.split("/").pop() || "clipped image",
@@ -92,7 +92,7 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
         content: `![image](${info.srcUrl})`,
         tags: ["clipped", "image"],
       });
-    } else if (info.menuItemId === "vault-save-selection") {
+    } else if (info.menuItemId === "enthymio-save-selection") {
       await postItem({
         type: "note",
         title: (info.selectionText || "").slice(0, 80) || "clipped note",
@@ -101,9 +101,9 @@ browser.contextMenus.onClicked.addListener(async (info, tab) => {
         tags: ["clipped", "quote"],
       });
     }
-    await notify("TheVault", "Saved to vault");
+    await notify("Enthymio", "Saved to vault");
   } catch (e) {
-    await notify("TheVault", `Save failed: ${e.message}`);
+    await notify("Enthymio", `Save failed: ${e.message}`);
   }
 });
 

@@ -55,9 +55,9 @@ export default function HomePage(): React.ReactElement {
       <Show when="signed-out">
         <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col items-center justify-center px-6 text-center">
           <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e60023] text-3xl font-black text-white">
-            V
+            E
           </span>
-          <h1 className="mt-6 text-3xl font-black tracking-tight">TheVault</h1>
+          <h1 className="mt-6 text-3xl font-black tracking-tight">Enthymio</h1>
           <p className="mt-2 text-zinc-500">
             Your private vault for images, links, notes, audio and videos. Sign in to open it.
           </p>
@@ -108,7 +108,7 @@ export default function HomePage(): React.ReactElement {
               onClick={() => setDrawerOpen(true)}
               className="mt-4 rounded-full bg-[#e60023] px-5 py-2.5 font-semibold text-white hover:bg-[#c8001e]"
             >
-              Save to vault
+              Save to Enthymio
             </button>
           </div>
         ) : (

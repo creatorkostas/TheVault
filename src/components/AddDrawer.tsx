@@ -89,7 +89,7 @@ export function AddDrawer({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center">
-          <h2 className="text-lg font-bold">Save to vault</h2>
+          <h2 className="text-lg font-bold">Save to Enthymio</h2>
           <button
             type="button"
             onClick={onClose}

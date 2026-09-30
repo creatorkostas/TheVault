@@ -1,3 +1,3 @@
-module thevault-save
+module enthymio-save
 
 go 1.24

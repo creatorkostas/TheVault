@@ -1,6 +1,6 @@
-# TheVault Clipper (Firefox / Zen)
+# Enthymio Clipper (Firefox / Zen)
 
-Save pages, YouTube videos, links, images and selected text to your TheVault
+Save pages, YouTube videos, links, images and selected text to your Enthymio
 without leaving the browser.
 
 ## Install (temporary, for personal use)
@@ -14,7 +14,7 @@ without leaving the browser.
 ## Use
 
 - Toolbar popup: prefilled with the current tab (YouTube auto-detected) → **Save**
-- Right-click: **Save page / link / image / selection** to TheVault
+- Right-click: **Save page / link / image / selection** to Enthymio
 - Context menu + popup both show a success/failure notification
 
 ## Notes

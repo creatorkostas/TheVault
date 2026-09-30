@@ -4,8 +4,8 @@ const isYouTube = (url) =>
   /^(https?:\/\/)?(www\.|m\.)?(youtube\.com|youtu\.be)\//.test(url || "");
 
 const vaultBase = async () => {
-  const { vaultUrl } = await browser.storage.sync.get("vaultUrl");
-  return (vaultUrl || "http://localhost:3000").replace(/\/$/, "");
+  const { enthymioUrl } = await browser.storage.sync.get("enthymioUrl");
+  return (enthymioUrl || "http://localhost:3000").replace(/\/$/, "");
 };
 
 const init = async () => {

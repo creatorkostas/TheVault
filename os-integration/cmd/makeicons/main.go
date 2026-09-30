@@ -1,5 +1,5 @@
 // makeicons: generates tray.png (256px) + tray.ico (PNG-compressed) from a
-// drawn red rounded square with a white "V". Stdlib only: `go run ./cmd/makeicons`
+// drawn red rounded square with a white "E". Stdlib only: `go run ./cmd/makeicons`
 package main
 
 import (
@@ -29,9 +29,11 @@ func main() {
 	}
 	img := image.NewRGBA(image.Rect(0, 0, size, size))
 	roundRect(img, 8, 8, size-8, size-8, 56, red)
-	// White "V": two thick strokes (left 78,70 -> 128,186 ; right 178,70 -> 128,186)
-	thickLine(img, 78, 70, 128, 186, 34, white)
-	thickLine(img, 178, 70, 128, 186, 34, white)
+	// White "E": vertical bar + top/mid/bottom arms
+	thickLine(img, 92, 70, 92, 186, 32, white)
+	thickLine(img, 92, 70, 178, 70, 32, white)
+	thickLine(img, 92, 128, 164, 128, 30, white)
+	thickLine(img, 92, 186, 178, 186, 32, white)
 
 	var pngBuf bytes.Buffer
 	if err := png.Encode(&pngBuf, img); err != nil {

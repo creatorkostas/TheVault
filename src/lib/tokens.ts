@@ -23,7 +23,7 @@ export function listTokens(userId: string): ApiToken[] {
 /** Creates a token; the secret is returned once and never listed again. */
 export function createToken(userId: string, name: string): { id: string; token: string; name: string; createdAt: number } {
   const id = randomBytes(8).toString("hex");
-  const token = `vt_${randomBytes(24).toString("base64url")}`;
+  const token = `et_${randomBytes(24).toString("base64url")}`;
   const now = Date.now();
   getDb()
     .prepare("INSERT INTO api_tokens (id, token, user_id, name, created_at) VALUES (?, ?, ?, ?, ?)")

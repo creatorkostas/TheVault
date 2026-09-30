@@ -1,11 +1,11 @@
-// vault-save: CLI clipper for TheVault. Stdlib only, no dependencies.
+// enthymio-save: CLI clipper for Enthymio. Stdlib only, no dependencies.
 //
 // Examples:
 //
-//	vault-save --url https://example.com --title "Example"
-//	vault-save --file ./photo.jpg --tags "clipped,photo"
-//	vault-save --type note --content - < note.txt        # stdin
-//	vault-save --url-file page.url                       # Windows .url shortcut
+//	enthymio-save --url https://example.com --title "Example"
+//	enthymio-save --file ./photo.jpg --tags "clipped,photo"
+//	enthymio-save --type note --content - < note.txt        # stdin
+//	enthymio-save --url-file page.url                       # Windows .url shortcut
 package main
 
 import (
@@ -27,13 +27,13 @@ const defaultVault = "http://localhost:3000"
 
 func main() {
 	if err := run(); err != nil {
-		fmt.Fprintln(os.Stderr, "vault-save:", err)
+		fmt.Fprintln(os.Stderr, "enthymio-save:", err)
 		os.Exit(1)
 	}
 }
 
 func run() error {
-	vault := flag.String("vault", envOr("VAULT_URL", defaultVault), "Vault base URL")
+	vault := flag.String("vault", envOr("ENTHYMIO_URL", defaultVault), "Vault base URL")
 	typ := flag.String("type", "auto", "Item type: auto, bookmark, website, note, image, video, audio, youtube")
 	title := flag.String("title", "", "Item title")
 	url := flag.String("url", "", "URL to save")
@@ -42,7 +42,7 @@ func run() error {
 	tags := flag.String("tags", "", "Comma-separated tags")
 	collection := flag.String("collection", "", "Collection name")
 	file := flag.String("file", "", "Local file to upload (image/video/audio)")
-	token := flag.String("token", envOr("VAULT_TOKEN", ""), "API token (Settings in the vault)")
+	token := flag.String("token", envOr("ENTHYMIO_TOKEN", ""), "API token (Settings in the vault)")
 	flag.Parse()
 
 	if *urlFile != "" {

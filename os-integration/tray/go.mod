@@ -1,4 +1,4 @@
-module thevault-tray
+module enthymio-tray
 
 go 1.24
 

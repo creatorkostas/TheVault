@@ -23,7 +23,7 @@ func (c *controller) start() error {
 	cmd := exec.Command(bunPath(), "run", "start", "--", "-p", c.port)
 	cmd.Dir = c.root
 	if c.disableTypes != "" {
-		cmd.Env = append(os.Environ(), "VAULT_DISABLED_TYPES="+c.disableTypes)
+		cmd.Env = append(os.Environ(), "ENTHYMIO_DISABLED_TYPES="+c.disableTypes)
 	}
 	hideConsole(cmd)
 	if err := cmd.Start(); err != nil {

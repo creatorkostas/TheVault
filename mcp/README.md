@@ -1,4 +1,4 @@
-# TheVault MCP server
+# Enthymio MCP server
 
 Exposes your vault to AI agents over MCP (stdio).
 
@@ -20,5 +20,5 @@ bun run mcp
 ## Connect an agent
 
 Copy `config.example.json` into your client's MCP config (Claude Desktop, opencode, etc.)
-and adjust the absolute paths. The server reads the same `./data/vault.db` as the web app,
+and adjust the absolute paths. The server reads the same `./data/enthymio.db` as the web app,
 so no extra setup is needed — just point `cwd` at the repo root.

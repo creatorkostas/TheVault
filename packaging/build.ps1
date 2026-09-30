@@ -14,13 +14,13 @@ Copy-Item -Recurse -Force ".next\static" "$Out\.next\static"
 if (Test-Path "public") { Copy-Item -Recurse -Force "public" "$Out\public" }
 
 Set-Location os-integration
-go build -o "..\$Out\vault-save.exe" .\cmd\vault-save
+go build -o "..\$Out\enthymio-save.exe" .\cmd\enthymio-save
 Set-Location tray
-go build -o "..\..\$Out\vault-tray.exe" .
+go build -o "..\..\$Out\enthymio-tray.exe" .
 Set-Location ..
-$env:GOOS = "linux"; go build -o "..\dist\vault-save-linux" .\cmd\vault-save
+$env:GOOS = "linux"; go build -o "..\dist\enthymio-save-linux" .\cmd\enthymio-save
 $env:GOOS = $null
 Set-Location ..
 
-bun build --compile packaging/launcher.ts --outfile "$Out\vault.exe"
-Write-Host "Done: $Out\vault.exe — double-click to run (keep the folder together)."
+bun build --compile packaging/launcher.ts --outfile "$Out\enthymio.exe"
+Write-Host "Done: $Out\enthymio.exe — double-click to run (keep the folder together)."

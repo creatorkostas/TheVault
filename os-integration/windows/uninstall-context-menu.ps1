@@ -1,11 +1,11 @@
 #Requires -Version 5.1
-<# Removes TheVault right-click entries (per-user). #>
+<# Removes Enthymio right-click entries (per-user). #>
 $ErrorActionPreference = "Continue"
 
-Remove-Item -Path "HKCU:\Software\Classes\SystemFileAssociations\image\shell\TheVault.Save" -Recurse -Force
-Remove-Item -Path "HKCU:\Software\Classes\SystemFileAssociations\video\shell\TheVault.Save" -Recurse -Force
-Remove-Item -Path "HKCU:\Software\Classes\SystemFileAssociations\audio\shell\TheVault.Save" -Recurse -Force
-Remove-Item -Path "HKCU:\Software\Classes\InternetShortcut\shell\TheVault.Save" -Recurse -Force
-Remove-Item -Path "HKCU:\Software\Classes\Directory\Background\shell\TheVault.Note" -Recurse -Force
+Remove-Item -Path "HKCU:\Software\Classes\SystemFileAssociations\image\shell\Enthymio.Save" -Recurse -Force
+Remove-Item -Path "HKCU:\Software\Classes\SystemFileAssociations\video\shell\Enthymio.Save" -Recurse -Force
+Remove-Item -Path "HKCU:\Software\Classes\SystemFileAssociations\audio\shell\Enthymio.Save" -Recurse -Force
+Remove-Item -Path "HKCU:\Software\Classes\InternetShortcut\shell\Enthymio.Save" -Recurse -Force
+Remove-Item -Path "HKCU:\Software\Classes\Directory\Background\shell\Enthymio.Note" -Recurse -Force
 
-Write-Host "TheVault context menu removed."
+Write-Host "Enthymio context menu removed."

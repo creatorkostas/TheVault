@@ -5,6 +5,6 @@ MimeType=image/*;video/*;audio/*;
 Actions=saveToVault;
 
 [Desktop Action saveToVault]
-Name=Save to TheVault
+Name=Save to Enthymio
 Icon=document-save
-Exec=vault-save-many %F
+Exec=enthymio-save-many %F

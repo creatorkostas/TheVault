@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
-Name=Save clipboard note to TheVault
+Name=Save clipboard note to Enthymio
 Comment=Save current clipboard text as a note
 Icon=accessories-text-editor
-Exec=sh -c '(xclip -o -selection clipboard 2>/dev/null || wl-paste 2>/dev/null) | vault-save --type note --content - --title "Clipboard note" --tags clipped && notify-send TheVault "Saved ✓"'
+Exec=sh -c '(xclip -o -selection clipboard 2>/dev/null || wl-paste 2>/dev/null) | enthymio-save --type note --content - --title "Clipboard note" --tags clipped && notify-send Enthymio "Saved ✓"'
 Terminal=false
 Categories=Utility;

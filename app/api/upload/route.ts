@@ -40,11 +40,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   if (file.size > 200 * 1024 * 1024)
     return NextResponse.json({ error: "file too large (max 200MB)" }, { status: 400 });
 
-  await mkdir("./data/vault", { recursive: true });
+  await mkdir("./data/enthymio", { recursive: true });
   const safe = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
   const name = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}-${safe}`;
   const buf = Buffer.from(await file.arrayBuffer());
-  await writeFile(`./data/vault/${name}`, buf);
+  await writeFile(`./data/enthymio/${name}`, buf);
   return NextResponse.json({
     mediaPath: `/api/files/${name}`,
     mime: file.type,

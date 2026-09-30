@@ -14,7 +14,7 @@ export async function DELETE(
   deleteItem(authed.userId, id);
   const media = cur?.mediaPath;
   if (media?.startsWith("/api/files/")) {
-    const file = `./data/vault/${media.replace("/api/files/", "")}`;
+    const file = `./data/enthymio/${media.replace("/api/files/", "")}`;
     await unlink(file).catch(() => {});
   }
   return NextResponse.json({ ok: true });

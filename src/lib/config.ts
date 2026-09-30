@@ -5,10 +5,10 @@ export type UploadKind = "image" | "video" | "audio";
 
 /**
  * Comma-separated item types disabled by config, e.g. "video,audio".
- * Source: VAULT_DISABLED_TYPES env (empty = everything allowed).
+ * Source: ENTHYMIO_DISABLED_TYPES env (empty = everything allowed).
  */
 export const disabledTypes = (): ItemType[] => {
-  const raw = process.env.VAULT_DISABLED_TYPES ?? "";
+  const raw = process.env.ENTHYMIO_DISABLED_TYPES ?? "";
   return raw
     .split(",")
     .map((t) => t.trim().toLowerCase())

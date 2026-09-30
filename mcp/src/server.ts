@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * TheVault MCP server (stdio) — lets agents search/save/get/delete vault items.
+ * Enthymio MCP server (stdio) — lets agents search/save/get/delete vault items.
  * Run: bun run mcp   (or: bun mcp/src/server.ts)
  */
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
@@ -13,13 +13,13 @@ import { toYouTubeThumb } from "@/lib/youtube";
 
 getDb();
 
-const MCP_USER = process.env.VAULT_USER_ID ?? "";
+const MCP_USER = process.env.ENTHYMIO_USER_ID ?? "";
 if (!MCP_USER) {
-  console.error("vault MCP: set VAULT_USER_ID to your Clerk user id (find it in Settings in the vault).");
+  console.error("vault MCP: set ENTHYMIO_USER_ID to your Clerk user id (find it in Settings in the vault).");
   process.exit(1);
 }
 
-const server = new McpServer({ name: "thevault", version: "0.1.0" });
+const server = new McpServer({ name: "enthymio", version: "0.1.0" });
 const text = (v: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(v, null, 2) }],
 });
@@ -40,7 +40,7 @@ server.registerTool(
 server.registerTool(
   "vault_save",
   {
-    title: "Save to vault",
+    title: "Save to Enthymio",
     description: "Save a bookmark, website, note, YouTube link, or a file already uploaded via the web app.",
     inputSchema: {
       type: z.enum(ITEM_TYPES).describe("Item type"),

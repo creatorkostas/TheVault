@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "TheVault",
+  title: "Enthymio",
   description: "Personal vault for images, bookmarks, notes, audio, videos",
 };
 

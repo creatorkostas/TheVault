@@ -66,11 +66,11 @@ export function SettingsModal({ onClose }: { onClose: () => void }): React.React
         <div>
           <h3 className="text-sm font-semibold">API tokens</h3>
           <p className="text-xs text-zinc-500">
-            Paste a token into the extension options or use it as <code>VAULT_TOKEN</code> for the Go helper.
+            Paste a token into the extension options or use it as <code>ENTHYMIO_TOKEN</code> for the Go helper.
           </p>
           {user ? (
             <p className="mt-1 break-all font-mono text-[11px] text-zinc-500">
-              MCP user id (VAULT_USER_ID): {user.id}
+              MCP user id (ENTHYMIO_USER_ID): {user.id}
             </p>
           ) : null}
         </div>
