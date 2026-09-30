@@ -3,9 +3,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { Show, SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
 import { AddDrawer } from "@/components/AddDrawer";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { SearchIcon } from "@/components/icons";
 import { apiTypeOf, Sidebar, type FilterKey } from "@/components/Sidebar";
 import { SettingsModal } from "@/components/SettingsModal";
+import { toast, Toaster } from "@/components/Toaster";
 import { VaultCard } from "@/components/VaultCard";
 import { fetchConfig, fetchItems, removeVaultItem } from "@/lib/api-client";
 import type { VaultItem } from "@/lib/types";
@@ -19,6 +21,8 @@ export default function HomePage(): React.ReactElement {
   const [loading, setLoading] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState<VaultItem | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -47,9 +51,23 @@ export default function HomePage(): React.ReactElement {
   }, [load, isLoaded, isSignedIn]);
 
   const onDelete = async (id: string): Promise<void> => {
-    if (!confirm("Delete this item?")) return;
-    await removeVaultItem(id);
-    await load();
+    const item = items.find((it) => it.id === id) ?? null;
+    setPendingDelete(item);
+  };
+
+  const confirmDelete = async (): Promise<void> => {
+    if (!pendingDelete) return;
+    setDeleting(true);
+    try {
+      await removeVaultItem(pendingDelete.id);
+      setPendingDelete(null);
+      toast("Deleted");
+      await load();
+    } catch (e) {
+      toast(e instanceof Error ? e.message : "Delete failed", "error");
+    } finally {
+      setDeleting(false);
+    }
   };
 
   return (
@@ -123,7 +141,17 @@ export default function HomePage(): React.ReactElement {
       </main>
       {drawerOpen ? <AddDrawer disabled={disabled} onCreated={() => load()} onClose={() => setDrawerOpen(false)} /> : null}
       {settingsOpen ? <SettingsModal onClose={() => setSettingsOpen(false)} /> : null}
+      {pendingDelete ? (
+        <ConfirmDialog
+          title="Delete this item?"
+          message={`"${pendingDelete.title}" will be removed from your vault. This can't be undone.`}
+          busy={deleting}
+          onConfirm={() => confirmDelete().catch((e) => toast(String(e), "error"))}
+          onCancel={() => setPendingDelete(null)}
+        />
+      ) : null}
       </Show>
+      <Toaster />
     </div>
   );
 }

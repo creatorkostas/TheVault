@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AudioRecorder } from "./AudioRecorder";
 import { guessType, uploadFile } from "@/lib/api-client";
 import { CloseIcon } from "./icons";
+import { toast } from "./Toaster";
 import type { CreateItemInput, ItemType } from "@/lib/types";
 
 const TYPES: ItemType[] = ["bookmark", "website", "note", "image", "video", "audio", "youtube"];
@@ -70,13 +71,20 @@ export function AddDrawer({
         tags: form.tags.split(",").map((t) => t.trim()).filter(Boolean),
         collection: form.collection || null,
       };
-      await fetch("/api/items", {
+      const res = await fetch("/api/items", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(input),
       });
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as { error?: unknown } | null;
+        throw new Error(typeof data?.error === "string" ? data.error : `Save failed (${res.status})`);
+      }
       onClose();
+      toast("Saved to Enthymio");
       onCreated();
+    } catch (e) {
+      toast(e instanceof Error ? e.message : "Save failed", "error");
     } finally {
       setSaving(false);
     }
@@ -150,17 +158,22 @@ export function AddDrawer({
             accept={acceptFor(disabled)}
             onChange={(e) => {
               const f = e.target.files?.[0];
-              if (f) handleFile(f).catch((err) => alert(String(err)));
+              if (f) {
+                toast("Uploading…");
+                handleFile(f)
+                  .then(() => toast("File attached"))
+                  .catch((err) => toast(err instanceof Error ? err.message : String(err), "error"));
+              }
             }}
           />
           {form.mediaPath ? (
             <p className="truncate text-xs font-medium text-emerald-700">{form.mediaPath}</p>
           ) : null}
-          <AudioRecorder onBlob={(b) => handleAudioBlob(b).catch((e) => alert(String(e)))} />
+          <AudioRecorder onBlob={(b) => handleAudioBlob(b).then(() => toast("Audio attached")).catch((e) => toast(e instanceof Error ? e.message : String(e), "error"))} />
         </div>
         <button
           type="button"
-          onClick={() => submit().catch((e) => alert(String(e)))}
+          onClick={() => submit()}
           disabled={saving || !form.title.trim()}
           className="w-full rounded-full bg-[#e60023] py-3 font-semibold text-white hover:bg-[#c8001e] disabled:opacity-50"
         >

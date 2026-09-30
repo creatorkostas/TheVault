@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { CloseIcon } from "./icons";
+import { ConfirmDialog } from "./ConfirmDialog";
+import { toast } from "./Toaster";
 
 interface TokenRow {
   id: string;
@@ -17,6 +19,8 @@ export function SettingsModal({ onClose }: { onClose: () => void }): React.React
   const [tokens, setTokens] = useState<TokenRow[]>([]);
   const [name, setName] = useState("");
   const [secret, setSecret] = useState<string | null>(null);
+  const [revoking, setRevoking] = useState<TokenRow | null>(null);
+  const [busy, setBusy] = useState(false);
 
   const load = async (): Promise<void> => {
     const res = await fetch("/api/tokens");
@@ -28,26 +32,40 @@ export function SettingsModal({ onClose }: { onClose: () => void }): React.React
   }, []);
 
   const create = async (): Promise<void> => {
-    const res = await fetch("/api/tokens", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: name || "default" }),
-    });
-    if (!res.ok) return;
-    const data = (await res.json()) as { token: { token: string } };
-    setSecret(data.token.token);
-    setName("");
-    await load();
+    try {
+      const res = await fetch("/api/tokens", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name || "default" }),
+      });
+      if (!res.ok) throw new Error(`Couldn't create token (${res.status})`);
+      const data = (await res.json()) as { token: { token: string } };
+      setSecret(data.token.token);
+      setName("");
+      toast("Token created — copy it now");
+      await load();
+    } catch (e) {
+      toast(e instanceof Error ? e.message : "Couldn't create token", "error");
+    }
   };
 
-  const revoke = async (id: string): Promise<void> => {
-    if (!confirm("Revoke this token? Connected tools will stop working.")) return;
-    await fetch("/api/tokens", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-    await load();
+  const confirmRevoke = async (): Promise<void> => {
+    if (!revoking) return;
+    setBusy(true);
+    try {
+      await fetch("/api/tokens", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: revoking.id }),
+      });
+      setRevoking(null);
+      toast("Token revoked");
+      await load();
+    } catch (e) {
+      toast(e instanceof Error ? e.message : "Couldn't revoke token", "error");
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -80,7 +98,7 @@ export function SettingsModal({ onClose }: { onClose: () => void }): React.React
             <p className="mt-1 break-all font-mono text-xs text-zinc-900">{secret}</p>
             <button
               type="button"
-              onClick={() => navigator.clipboard.writeText(secret).catch(() => {})}
+              onClick={() => navigator.clipboard.writeText(secret).then(() => toast("Copied")).catch(() => toast("Copy failed", "error"))}
               className="mt-2 rounded-full bg-zinc-900 px-3 py-1 text-xs font-semibold text-white"
             >
               Copy
@@ -96,7 +114,7 @@ export function SettingsModal({ onClose }: { onClose: () => void }): React.React
           />
           <button
             type="button"
-            onClick={() => create().catch((e) => alert(String(e)))}
+            onClick={() => create()}
             className="shrink-0 rounded-full bg-[#e60023] px-4 py-2 text-sm font-semibold text-white hover:bg-[#c8001e]"
           >
             New token
@@ -109,7 +127,7 @@ export function SettingsModal({ onClose }: { onClose: () => void }): React.React
               <span className="font-mono text-xs text-zinc-500">{t.hint}</span>
               <button
                 type="button"
-                onClick={() => revoke(t.id).catch((e) => alert(String(e)))}
+                onClick={() => setRevoking(t)}
                 className="ml-auto text-xs font-semibold text-red-600 hover:underline"
               >
                 Revoke
@@ -121,6 +139,16 @@ export function SettingsModal({ onClose }: { onClose: () => void }): React.React
           ) : null}
         </ul>
       </div>
+      {revoking ? (
+        <ConfirmDialog
+          title="Revoke this token?"
+          message={`"${revoking.name}" will stop working in connected tools. This can't be undone.`}
+          confirmLabel="Revoke"
+          busy={busy}
+          onConfirm={() => confirmRevoke()}
+          onCancel={() => setRevoking(null)}
+        />
+      ) : null}
     </div>
   );
 }
