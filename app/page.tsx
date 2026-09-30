@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Show, SignInButton, SignUpButton } from "@clerk/nextjs";
+import { Show, SignInButton, SignUpButton, useAuth } from "@clerk/nextjs";
 import { AddDrawer } from "@/components/AddDrawer";
 import { SearchIcon } from "@/components/icons";
 import { apiTypeOf, Sidebar, type FilterKey } from "@/components/Sidebar";
@@ -11,6 +11,7 @@ import { fetchConfig, fetchItems, removeVaultItem } from "@/lib/api-client";
 import type { VaultItem } from "@/lib/types";
 
 export default function HomePage(): React.ReactElement {
+  const { isLoaded, isSignedIn } = useAuth();
   const [items, setItems] = useState<VaultItem[]>([]);
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
@@ -38,11 +39,12 @@ export default function HomePage(): React.ReactElement {
   }, []);
 
   useEffect(() => {
+    if (!isLoaded || !isSignedIn) return;
     const t = setTimeout(() => {
       load().catch(console.error);
     }, 250);
     return () => clearTimeout(t);
-  }, [load]);
+  }, [load, isLoaded, isSignedIn]);
 
   const onDelete = async (id: string): Promise<void> => {
     if (!confirm("Delete this item?")) return;
