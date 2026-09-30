@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "thevault",
+      "name": "enthymio",
       "dependencies": {
         "@clerk/nextjs": "^7.9.8",
         "@modelcontextprotocol/sdk": "^1.31.0",
