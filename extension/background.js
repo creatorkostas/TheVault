@@ -28,7 +28,7 @@ const postItem = async (input) => {
 
 const notify = (title, message) =>
   browser.notifications
-    .create({ type: "basic", iconUrl: "icons/icon.svg", title, message })
+    .create({ type: "basic", iconUrl: "icons/icon.png", title, message })
     .catch(() => {});
 
 const isYouTube = (url) => /^(https?:\/\/)?(www\.|m\.)?(youtube\.com|youtu\.be)\//.test(url || "");

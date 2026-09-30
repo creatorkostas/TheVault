@@ -10,7 +10,7 @@ import type { CreateItemInput, ItemType } from "@/lib/types";
 const TYPES: ItemType[] = ["bookmark", "website", "note", "image", "video", "audio", "youtube"];
 
 const inputCls =
-  "w-full rounded-2xl bg-zinc-100 p-3 text-[15px] outline-none placeholder:text-zinc-500 focus:ring-2 focus:ring-zinc-900";
+  "w-full rounded-2xl bg-[#f6f2e8] p-3 text-[15px] outline-none placeholder:text-zinc-500 focus:ring-2 focus:ring-[#ca503d]";
 
 const acceptFor = (disabled: string[]): string => {
   const kinds: string[] = [];
@@ -101,7 +101,7 @@ export function AddDrawer({
           <button
             type="button"
             onClick={onClose}
-            className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+            className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-[#dac4b1] text-zinc-600 hover:brightness-95"
           >
             <CloseIcon />
           </button>
@@ -151,7 +151,7 @@ export function AddDrawer({
             className={inputCls}
           />
         </div>
-        <div className="space-y-2 rounded-2xl bg-zinc-100 p-4">
+        <div className="space-y-2 rounded-2xl bg-[#f6f2e8] p-4">
           <p className="text-sm text-zinc-600">Upload image / video / audio file</p>
           <input
             type="file"
@@ -175,7 +175,7 @@ export function AddDrawer({
           type="button"
           onClick={() => submit()}
           disabled={saving || !form.title.trim()}
-          className="w-full rounded-full bg-[#e60023] py-3 font-semibold text-white hover:bg-[#c8001e] disabled:opacity-50"
+          className="w-full rounded-full bg-[#ca503d] py-3 font-semibold text-white hover:brightness-90 disabled:opacity-50"
         >
           {saving ? "Saving…" : "Save"}
         </button>

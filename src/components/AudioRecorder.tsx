@@ -39,7 +39,7 @@ export function AudioRecorder({
       type="button"
       onClick={recording ? stop : start}
       className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold ${
-        recording ? "bg-[#e60023] text-white" : "bg-zinc-100 text-zinc-800 hover:bg-zinc-200"
+        recording ? "bg-[#ca503d] text-white" : "bg-[#dac4b1] text-zinc-800 hover:brightness-95"
       }`}
     >
       {recording ? <StopIcon /> : <MicIcon />}

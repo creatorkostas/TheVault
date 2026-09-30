@@ -15,8 +15,8 @@ const domainOf = (url: string | null): string => {
 };
 
 const tileBg: Record<string, string> = {
-  note: "bg-amber-50",
-  audio: "bg-violet-50",
+  note: "bg-[#dac4b1]",
+  audio: "bg-[#dac4b1]",
   bookmark: "bg-white",
   website: "bg-white",
 };
@@ -93,7 +93,7 @@ function Media({ item }: { item: VaultItem }): React.ReactElement {
   return (
     <span className="block bg-white p-5 ring-1 ring-inset ring-zinc-200">
       <span className="flex items-center gap-3">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-lg font-bold text-white">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#b5a79b] text-lg font-bold text-zinc-900">
           {(domain || item.title).charAt(0).toUpperCase()}
         </span>
         <span className="min-w-0">
@@ -117,7 +117,7 @@ export function VaultCard({
   const domain = domainOf(item.url);
   return (
     <article className="group">
-      <div className="relative overflow-hidden rounded-2xl bg-zinc-100">
+      <div className="relative overflow-hidden rounded-2xl bg-[#dac4b1]">
         <Media item={item} />
         <div className="pointer-events-none absolute inset-0 rounded-2xl bg-black/0 transition group-hover:bg-black/15" />
         <button

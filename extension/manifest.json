@@ -24,13 +24,13 @@
     "default_title": "Save to Enthymio",
     "default_popup": "popup.html",
     "default_icon": {
-      "48": "icons/icon.svg",
-      "96": "icons/icon.svg"
+      "48": "icons/icon.png",
+      "96": "icons/icon.png"
     }
   },
   "icons": {
-    "48": "icons/icon.svg",
-    "96": "icons/icon.svg"
+    "48": "icons/icon.png",
+    "96": "icons/icon.png"
   },
   "options_ui": {
     "page": "options.html",

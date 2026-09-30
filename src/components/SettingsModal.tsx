@@ -76,7 +76,7 @@ export function SettingsModal({ onClose }: { onClose: () => void }): React.React
           <button
             type="button"
             onClick={onClose}
-            className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+            className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-[#dac4b1] text-zinc-600 hover:brightness-95"
           >
             <CloseIcon />
           </button>
@@ -110,19 +110,19 @@ export function SettingsModal({ onClose }: { onClose: () => void }): React.React
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Token name (e.g. firefox)"
-            className="w-full rounded-2xl bg-zinc-100 p-2.5 text-sm outline-none placeholder:text-zinc-500"
+            className="w-full rounded-2xl bg-[#f6f2e8] p-2.5 text-sm outline-none placeholder:text-zinc-500"
           />
           <button
             type="button"
             onClick={() => create()}
-            className="shrink-0 rounded-full bg-[#e60023] px-4 py-2 text-sm font-semibold text-white hover:bg-[#c8001e]"
+            className="shrink-0 rounded-full bg-[#ca503d] px-4 py-2 text-sm font-semibold text-white hover:brightness-90"
           >
             New token
           </button>
         </div>
         <ul className="space-y-2">
           {tokens.map((t) => (
-            <li key={t.id} className="flex items-center gap-2 rounded-2xl bg-zinc-100 px-3 py-2 text-sm">
+            <li key={t.id} className="flex items-center gap-2 rounded-2xl bg-[#f6f2e8] px-3 py-2 text-sm">
               <span className="font-semibold">{t.name}</span>
               <span className="font-mono text-xs text-zinc-500">{t.hint}</span>
               <button

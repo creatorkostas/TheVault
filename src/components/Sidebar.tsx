@@ -62,10 +62,9 @@ export function Sidebar({
   onSettings: () => void;
 }): React.ReactElement {
   return (
-    <nav className="sticky top-0 flex h-screen w-16 flex-col items-center gap-1 border-r border-zinc-200 bg-white py-3">
-      <span className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[#e60023] text-xl font-black text-white">
-        E
-      </span>
+    <nav className="sticky top-0 flex h-screen w-16 flex-col items-center gap-1 border-r border-[#dac4b1] bg-[#f6f2e8] py-3">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/icon.png" alt="Enthymio home" title="Enthymio" className="mb-3 h-10 w-10 rounded-xl shadow" />
       {visibleFilters(disabled).map(({ key, label, Icon }) => (
         <button
           key={key}
@@ -73,7 +72,7 @@ export function Sidebar({
           title={label}
           onClick={() => onSelect(key)}
           className={`flex h-11 w-11 items-center justify-center rounded-full transition ${
-            active === key ? "bg-zinc-900 text-white" : "text-zinc-600 hover:bg-zinc-100"
+            active === key ? "bg-[#b5a79b] text-zinc-900" : "text-zinc-600 hover:bg-[#dac4b1]"
           }`}
         >
           <Icon />
@@ -83,7 +82,7 @@ export function Sidebar({
         type="button"
         title="Create / save new"
         onClick={onCreate}
-        className="mt-2 flex h-11 w-11 items-center justify-center rounded-full bg-[#e60023] text-white hover:bg-[#c8001e]"
+        className="mt-2 flex h-11 w-11 items-center justify-center rounded-full bg-[#ca503d] text-white hover:brightness-90"
       >
         <PlusIcon />
       </button>
@@ -93,7 +92,7 @@ export function Sidebar({
           type="button"
           title="Settings & API tokens"
           onClick={onSettings}
-          className="flex h-11 w-11 items-center justify-center rounded-full text-zinc-600 hover:bg-zinc-100"
+          className="flex h-11 w-11 items-center justify-center rounded-full text-zinc-600 hover:bg-[#dac4b1]"
         >
           <GearIcon />
         </button>
@@ -106,7 +105,7 @@ export function Sidebar({
           <button
             type="button"
             title="Sign in"
-            className="rounded-full bg-zinc-900 px-3 py-2 text-xs font-semibold text-white"
+            className="rounded-full bg-[#b5a79b] px-3 py-2 text-xs font-semibold text-zinc-900"
           >
             Sign in
           </button>

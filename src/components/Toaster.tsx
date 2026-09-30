@@ -58,9 +58,9 @@ export function Toaster(): React.ReactElement {
       {visible.map((t) => (
         <div
           key={`${t.id}-${t.message}`}
-          className="pointer-events-auto flex w-full items-center gap-2.5 rounded-2xl bg-zinc-900 px-4 py-3 text-sm font-medium text-white shadow-xl"
+          className="pointer-events-auto flex w-full items-center gap-2.5 rounded-2xl bg-[#b5a79b] px-4 py-3 text-sm font-medium text-zinc-900 shadow-xl"
         >
-          <span className={t.kind === "success" ? "text-emerald-400" : "text-red-400"}>
+          <span className={t.kind === "success" ? "text-emerald-700" : "text-red-700"}>
             {t.kind === "success" ? <CheckIcon /> : <AlertIcon />}
           </span>
           <span className="min-w-0 flex-1 truncate">{t.message}</span>
@@ -70,7 +70,7 @@ export function Toaster(): React.ReactElement {
               items = items.filter((x) => x.id !== t.id);
               emit();
             }}
-            className="shrink-0 rounded-full px-2 py-0.5 text-xs text-zinc-400 hover:text-white"
+            className="shrink-0 rounded-full px-2 py-0.5 text-xs text-zinc-600 hover:text-zinc-900"
           >
             Dismiss
           </button>

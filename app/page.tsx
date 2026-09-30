@@ -71,24 +71,23 @@ export default function HomePage(): React.ReactElement {
   };
 
   return (
-    <div className="flex bg-white">
+    <div className="flex bg-[#f6f2e8]">
       <Show when="signed-out">
         <main className="mx-auto flex min-h-screen w-full max-w-lg flex-col items-center justify-center px-6 text-center">
-          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#e60023] text-3xl font-black text-white">
-            E
-          </span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/icon.png" alt="Enthymio" className="h-20 w-20 rounded-3xl shadow-lg" />
           <h1 className="mt-6 text-3xl font-black tracking-tight">Enthymio</h1>
           <p className="mt-2 text-zinc-500">
             Your private vault for images, links, notes, audio and videos. Sign in to open it.
           </p>
           <div className="mt-6 flex gap-3">
             <SignInButton mode="modal">
-              <button type="button" className="rounded-full bg-[#e60023] px-6 py-2.5 font-semibold text-white hover:bg-[#c8001e]">
+              <button type="button" className="rounded-full bg-[#ca503d] px-6 py-2.5 font-semibold text-white hover:brightness-90">
                 Sign in
               </button>
             </SignInButton>
             <SignUpButton mode="modal">
-              <button type="button" className="rounded-full bg-zinc-100 px-6 py-2.5 font-semibold text-zinc-900 hover:bg-zinc-200">
+              <button type="button" className="rounded-full bg-[#dac4b1] px-6 py-2.5 font-semibold text-zinc-900 hover:brightness-95">
                 Sign up
               </button>
             </SignUpButton>
@@ -98,8 +97,8 @@ export default function HomePage(): React.ReactElement {
       <Show when="signed-in">
       <Sidebar active={filter} disabled={disabled} onSelect={setFilter} onCreate={() => setDrawerOpen(true)} onSettings={() => setSettingsOpen(true)} />
       <main className="min-w-0 flex-1 px-4 pb-10">
-        <div className="sticky top-0 z-10 bg-white py-3">
-          <label className="flex items-center gap-2 rounded-full bg-zinc-100 px-4 py-2.5">
+        <div className="sticky top-0 z-10 bg-[#f6f2e8] py-3">
+          <label className="flex items-center gap-2 rounded-full bg-[#dac4b1] px-4 py-2.5">
             <span className="text-zinc-500">
               <SearchIcon />
             </span>
@@ -114,7 +113,7 @@ export default function HomePage(): React.ReactElement {
         {loading ? (
           <div className="masonry" aria-hidden>
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="animate-pulse rounded-2xl bg-zinc-100" style={{ height: 220 + ((i * 53) % 160) }} />
+              <div key={i} className="animate-pulse rounded-2xl bg-[#dac4b1]" style={{ height: 220 + ((i * 53) % 160) }} />
             ))}
           </div>
         ) : items.length === 0 ? (
@@ -126,7 +125,7 @@ export default function HomePage(): React.ReactElement {
             <button
               type="button"
               onClick={() => setDrawerOpen(true)}
-              className="mt-4 rounded-full bg-[#e60023] px-5 py-2.5 font-semibold text-white hover:bg-[#c8001e]"
+              className="mt-4 rounded-full bg-[#ca503d] px-5 py-2.5 font-semibold text-white hover:brightness-90"
             >
               Save to Enthymio
             </button>

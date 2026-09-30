@@ -37,7 +37,7 @@ export function ConfirmDialog({
             type="button"
             onClick={onCancel}
             aria-label="Close"
-            className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-zinc-100 text-zinc-600 hover:bg-zinc-200"
+            className="ml-auto flex h-9 w-9 items-center justify-center rounded-full bg-[#dac4b1] text-zinc-600 hover:brightness-95"
           >
             <CloseIcon />
           </button>
@@ -47,7 +47,7 @@ export function ConfirmDialog({
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-full bg-zinc-100 px-5 py-2.5 text-sm font-semibold text-zinc-800 hover:bg-zinc-200"
+            className="rounded-full bg-[#dac4b1] px-5 py-2.5 text-sm font-semibold text-zinc-800 hover:brightness-95"
           >
             Cancel
           </button>
@@ -56,7 +56,7 @@ export function ConfirmDialog({
             onClick={onConfirm}
             disabled={busy}
             className={`rounded-full px-5 py-2.5 text-sm font-semibold text-white disabled:opacity-50 ${
-              destructive ? "bg-[#e60023] hover:bg-[#c8001e]" : "bg-zinc-900 hover:bg-zinc-700"
+              destructive ? "bg-[#ca503d] hover:brightness-90" : "bg-zinc-900 hover:bg-zinc-700"
             }`}
           >
             {busy ? "Working…" : confirmLabel}

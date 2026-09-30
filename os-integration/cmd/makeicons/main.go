@@ -1,5 +1,6 @@
-// makeicons: generates tray.png (256px) + tray.ico (PNG-compressed) from a
-// drawn red rounded square with a white "E". Stdlib only: `go run ./cmd/makeicons`
+// makeicons: generates tray.png + tray.ico (PNG-compressed) from the repo
+// icon.png when present, otherwise draws a fallback mark.
+// Stdlib only: `go run ./cmd/makeicons` (from repo root or os-integration/)
 package main
 
 import (
@@ -17,7 +18,7 @@ import (
 const size = 256
 
 var (
-	red   = color.RGBA{0xE6, 0x00, 0x23, 0xFF}
+	red   = color.RGBA{0xCA, 0x50, 0x3D, 0xFF}
 	white = color.RGBA{0xFF, 0xFF, 0xFF, 0xFF}
 	clear = color.RGBA{0, 0, 0, 0}
 )
@@ -27,17 +28,20 @@ func main() {
 	if err := os.MkdirAll(out, 0o755); err != nil {
 		fatal(err)
 	}
-	img := image.NewRGBA(image.Rect(0, 0, size, size))
-	roundRect(img, 8, 8, size-8, size-8, 56, red)
-	// White "E": vertical bar + top/mid/bottom arms
-	thickLine(img, 92, 70, 92, 186, 32, white)
-	thickLine(img, 92, 70, 178, 70, 32, white)
-	thickLine(img, 92, 128, 164, 128, 30, white)
-	thickLine(img, 92, 186, 178, 186, 32, white)
-
 	var pngBuf bytes.Buffer
-	if err := png.Encode(&pngBuf, img); err != nil {
-		fatal(err)
+	if src, ok := findIcon(); ok {
+		b, err := os.ReadFile(src)
+		if err != nil {
+			fatal(err)
+		}
+		if !isPNG(b) {
+			fatal(fmt.Errorf("%s is not a PNG", src))
+		}
+		pngBuf.Write(b)
+		fmt.Println("source:", src)
+	} else {
+		drawFallback(&pngBuf)
+		fmt.Println("source: drawn fallback mark")
 	}
 	if err := os.WriteFile(filepath.Join(out, "tray.png"), pngBuf.Bytes(), 0o644); err != nil {
 		fatal(err)
@@ -45,7 +49,34 @@ func main() {
 	if err := os.WriteFile(filepath.Join(out, "tray.ico"), makeICO(pngBuf.Bytes()), 0o644); err != nil {
 		fatal(err)
 	}
-	fmt.Println("wrote os-integration/assets/tray.png + tray.ico")
+	fmt.Println("wrote", out+"/tray.png + tray.ico")
+}
+
+// findIcon locates the repo icon.png from common working directories.
+func findIcon() (string, bool) {
+	for _, c := range []string{"icon.png", "../icon.png", "../../icon.png"} {
+		if st, err := os.Stat(c); err == nil && !st.IsDir() {
+			return c, true
+		}
+	}
+	return "", false
+}
+
+func isPNG(b []byte) bool {
+	return len(b) > 8 && b[0] == 0x89 && b[1] == 'P' && b[2] == 'N' && b[3] == 'G'
+}
+
+func drawFallback(pngBuf *bytes.Buffer) {
+	img := image.NewRGBA(image.Rect(0, 0, size, size))
+	roundRect(img, 8, 8, size-8, size-8, 56, red)
+	// White "E": vertical bar + top/mid/bottom arms
+	thickLine(img, 92, 70, 92, 186, 32, white)
+	thickLine(img, 92, 70, 178, 70, 32, white)
+	thickLine(img, 92, 128, 164, 128, 30, white)
+	thickLine(img, 92, 186, 178, 186, 32, white)
+	if err := png.Encode(pngBuf, img); err != nil {
+		fatal(err)
+	}
 }
 
 func roundRect(img *image.RGBA, x0, y0, x1, y1, r int, c color.Color) {

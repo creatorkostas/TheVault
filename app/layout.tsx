@@ -14,7 +14,7 @@ export default function RootLayout({
 }): React.ReactNode {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-white text-zinc-900 antialiased">
+      <body className="min-h-screen bg-[#f6f2e8] text-zinc-900 antialiased">
         <ClerkProvider>
           {children}
         </ClerkProvider>
